@@ -11,4 +11,4 @@ jobs:
       - name: Prepare Release
         uses: karlhulme/github-action-prepare-release@master
         with:
-          releaseBranch: master
+          branchName: master
