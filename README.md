@@ -5,3 +5,5 @@ For example I use this repo to test the Github actions that I've created.
 
 Another simple change and then another breaking change.
 Yet another small change.
+
+This is a hotfix change that I want in both master and the LTS v1 release.
