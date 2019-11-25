@@ -11,6 +11,6 @@ jobs:
       - name: Prepare Release
         uses: karlhulme/github-action-prepare-release@master
         with:
-          branchName: lts_v1
+          branchName: master
         env:
           GITHUB_TOKEN: ${{ github.token }}
