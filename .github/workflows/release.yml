@@ -14,17 +14,8 @@ jobs:
         with:
           authorisedLoginsCsv: karlhulme
           commentJson: ${{toJson(github.event.comment)}}
-      - name: Clone repo
+      - name: Prepare Release
         if: steps.analyse_comment.outputs.instruction == 'release'
-        uses: actions/checkout@v1
-#       - name: Setup Node.js 12
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 12
-#           registry-url: https://registry.npmjs.org/
-#       - name: Install deps and run tests
-#         run: |
-#           npm ci
-#           npm test
-#         env:
-#           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        uses: karlhulme/github-action-prepare-release@master
+        with:
+          releaseBranch: ${{steps.analyse_comments.outputs.releaseBranch}}
