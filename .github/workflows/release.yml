@@ -8,14 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Analyse Comment
-        id: analyse_comment
-        uses: karlhulme/github-action-analyse-issue-comment@master
-        with:
-          authorisedLoginsCsv: karlhulme
-          commentJson: ${{toJson(github.event.comment)}}
       - name: Prepare Release
-        if: steps.analyse_comment.outputs.instruction == 'release'
         uses: karlhulme/github-action-prepare-release@master
         with:
-          releaseBranch: ${{steps.analyse_comments.outputs.releaseBranch}}
+          releaseBranch: master
