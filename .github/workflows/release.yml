@@ -19,7 +19,7 @@ jobs:
         if: steps.prepare_release.outputs.canRelease == 'yes'
         uses: karlhulme/github-action-create-release@master
         with:
-          branchName: master,
+          branchName: master
           releaseVersion: ${{ steps.prepare_release.outputs.releaseVersion }}
           releaseNotes: ${{ steps.prepare_release.outputs.releaseNotes }}
         env:
