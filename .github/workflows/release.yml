@@ -12,14 +12,14 @@ jobs:
         id: prepare_release
         uses: karlhulme/github-action-prepare-release@master
         with:
-          branchName: master
+          branchName: lts_v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Create Release
         if: steps.prepare_release.outputs.canRelease == 'yes'
         uses: karlhulme/github-action-create-release@master
         with:
-          branchName: master
+          branchName: lts_v1
           releaseVersion: ${{ steps.prepare_release.outputs.releaseVersion }}
           releaseNotes: ${{ steps.prepare_release.outputs.releaseNotes }}
         env:
