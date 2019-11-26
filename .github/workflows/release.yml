@@ -8,10 +8,55 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Add Comment
+      - name: Analyse Comment
+        id: analyse
+        uses: karlhulme/github-action-analyse-issue-comment@master
+        with:
+          authorisedLoginsCsv: karlhulme
+          commentJson: ${{toJson(github.event.comment)}}
+
+      - name: Prepare Release
+        if: steps.analyse.outputs.instruction == 'release'
+        id: prepare
+        uses: karlhulme/github-action-prepare-release@master
+        with:
+          releaseBranch: ${{ steps.analyse.outputs.releaseBranch }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Prepare Release - Failed
+        if: steps.prepare.outputs.canRelease == 'no'
         uses: karlhulme/github-action-create-issue-comment@master
         with:
           issueNumber: ${{ github.event.issue.number }}
-          body: ${{ format('You said {0}', github.event.comment.body) }}
+          body: ${{ format('Cannot release. {0}', steps.prepare.outputs.releaseFailureReason) }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Create Release
+        if: steps.prepare.outputs.canRelease == 'yes'
+        id: release
+        uses: karlhulme/github-action-create-release@master
+        with:
+          releaseBranch: ${{ steps.analyse.outputs.releaseBranch }}
+          releaseVersion: ${{ steps.prepare.outputs.releaseVersion }}
+          releaseNotes: ${{ steps.prepare.outputs.releaseNotes }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Create Release - Failed
+        if: steps.release.outputs.didRelease == 'no'
+        uses: karlhulme/github-action-create-issue-comment@master
+        with:
+          issueNumber: ${{ github.event.issue.number }}
+          body: ${{ format('Release failed. {0}', steps.release.outputs.releaseFailureReason) }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Report Success
+        if: steps.release.outputs.didRelease == 'yes'
+        uses: karlhulme/github-action-create-issue-comment@master
+        with:
+          issueNumber: ${{ github.event.issue.number }}
+          body: ${{ format('New release {0}', steps.prepare.outputs.releaseVersion) }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        
