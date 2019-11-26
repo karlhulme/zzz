@@ -8,19 +8,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare Release
-        id: prepare_release
-        uses: karlhulme/github-action-prepare-release@master
+      - name: Add Comment
+        uses: karlhulme/github-action-create-issue-comment@master
         with:
-          branchName: lts_v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: Create Release
-        if: steps.prepare_release.outputs.canRelease == 'yes'
-        uses: karlhulme/github-action-create-release@master
-        with:
-          branchName: lts_v1
-          releaseVersion: ${{ steps.prepare_release.outputs.releaseVersion }}
-          releaseNotes: ${{ steps.prepare_release.outputs.releaseNotes }}
+          issueNumber: 5
+          body: I was added by a workflow
         env:
           GITHUB_TOKEN: ${{ github.token }}
