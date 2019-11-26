@@ -8,3 +8,5 @@ Yet another small change.
 
 This is a hotfix change that I want in both master and the LTS v1 release.
 This is another hotfix just for LTS v1 but it comprises of two parts.
+
+A cheeky feature on the LTS branch.
