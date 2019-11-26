@@ -20,7 +20,7 @@ jobs:
         id: prepare
         uses: karlhulme/github-action-prepare-release@master
         with:
-          releaseBranch: ${{ steps.analyse.outputs.releaseBranch }}
+          branchName: ${{ steps.analyse.outputs.branchName }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Prepare Release - Failed
@@ -37,7 +37,7 @@ jobs:
         id: release
         uses: karlhulme/github-action-create-release@master
         with:
-          releaseBranch: ${{ steps.analyse.outputs.releaseBranch }}
+          branchName: ${{ steps.analyse.outputs.branchName }}
           releaseVersion: ${{ steps.prepare.outputs.releaseVersion }}
           releaseNotes: ${{ steps.prepare.outputs.releaseNotes }}
         env:
