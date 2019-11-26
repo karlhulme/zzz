@@ -12,6 +12,6 @@ jobs:
         uses: karlhulme/github-action-create-issue-comment@master
         with:
           issueNumber: 5
-          body: I was added by a workflow
+          body: ${{ toJson(github.event) }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
