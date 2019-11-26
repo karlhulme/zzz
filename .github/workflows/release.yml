@@ -11,7 +11,7 @@ jobs:
       - name: Add Comment
         uses: karlhulme/github-action-create-issue-comment@master
         with:
-          issueNumber: 5
-          body: ${{ toJson(github.event) }}
+          issueNumber: ${{ github.event.issue.number }}
+          body: ${{ format('You said {0}', github.event.comment.body) }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
