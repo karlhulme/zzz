@@ -9,8 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Prepare Release
+        id: prepare_release
         uses: karlhulme/github-action-prepare-release@master
         with:
           branchName: master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Create Release
+        if: steps.prepare_release.outputs.canRelease == 'yes'
+        uses: karlhulme/github-action-create-release@master
+        with:
+          branchName: master,
+          releaseVersion: ${{ steps.prepare_release.outputs.releaseVersion }}
+          releaseNotes: ${{ steps.prepare_release.outputs.releaseNotes }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
