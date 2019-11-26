@@ -10,3 +10,5 @@ This is a hotfix change that I want in both master and the LTS v1 release.
 Making a change on master, but not on LTS.
 
 One small change since release.
+
+This is a documentation change.
