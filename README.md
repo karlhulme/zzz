@@ -12,3 +12,5 @@ Making a change on master, but not on LTS.
 One small change since release.
 
 This is a documentation change.
+
+I've now added an additional line in a branch
